@@ -1,0 +1,45 @@
+﻿<Window x:Class="ModelPrediction.View.ModelThreat.Forms.ShowModel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ModelPrediction.View.ModelThreat.Forms"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+
+        mc:Ignorable="d"
+        Title="Просмотр моделей" Height="477" Width="549" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="Window_Loaded">
+    <DockPanel>
+        <DockPanel Margin="5" Width="170">
+            <materialDesign:Card VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <StackPanel>
+                    <Label Margin="7" FontSize="15" FontFamily="Century Gothic" Content="Описание модели" FontStretch="Expanded"/>
+
+                    <Label Content="Наименование модели:"/>
+                    <TextBox Name="nameModel" Margin="5,0"/>
+
+                    <Label Content="Наименование организации"/>
+                    <TextBox Name="nameOrg" Margin="5,0"/>
+
+                    <Label Content="Дата создания"/>
+                    <TextBox Name="dateCr" Margin="5,0"/>
+
+                    <Label Content="Количество угроз"/>
+                    <TextBox Name="countThreat" Margin="5,0"/>
+
+                    <Button Click="Button_Click" Content="Показать" Background="Black" BorderBrush="Black" Foreground="White" Margin="5,140"/>
+                </StackPanel>
+            </materialDesign:Card>
+        </DockPanel>
+        <DockPanel>
+            <materialDesign:Card>
+                <DataGrid Name="models" AutoGenerateColumns="False" SelectionChanged="Models_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Id}" Width="80" Visibility="Collapsed"/>
+                        <DataGridTextColumn Binding="{Binding Id}" Header="№ П/П" Width="80"/>
+                        <DataGridTextColumn Binding="{Binding NameModel}" Header="Наименование модели" Width="*" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </materialDesign:Card>
+        </DockPanel>
+    </DockPanel>
+</Window>

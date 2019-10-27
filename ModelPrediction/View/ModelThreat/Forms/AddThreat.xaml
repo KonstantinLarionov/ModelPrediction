@@ -1,0 +1,26 @@
+﻿<Window x:Class="ModelPrediction.View.ModelThreat.Forms.AddThreat"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ModelPrediction.View.ModelThreat.Forms"
+        mc:Ignorable="d"
+        Title="Добавление угроз" Height="501" Width="423" ResizeMode="NoResize">
+    <StackPanel>
+        <Label Margin="10,10,10,0" Content="Номер во ФСТЭК:" FontStyle="Italic" FontFamily="Century Gothic" FontSize="16"/>
+        <TextBox Name="numberFSTEK" Margin="10,0" FontSize="16"/>
+        <Label Margin="10,0" Content="Наименование угрозы" FontStyle="Italic" FontFamily="Century Gothic" FontSize="16"/>
+        <TextBox Name="name" Margin="10,0" FontSize="16"/>
+        <Label Margin="10,0" Content="Вероятность реализации" FontStyle="Italic" FontFamily="Century Gothic" FontSize="16"/>
+        <TextBox Name="verReal" Margin="10,0" FontSize="16"/>
+        <Label Margin="10,0" Content="Ущерб от реализации" FontStyle="Italic" FontFamily="Century Gothic" FontSize="16"/>
+        <TextBox Name="uwerb" Margin="10,0" FontSize="16"/>
+        <Label Margin="10,0" Content="Актуальность" FontStyle="Italic" FontFamily="Century Gothic" FontSize="16"/>
+        <ComboBox Name="actual" Margin="10,0" FontSize="16">
+            <ComboBoxItem>Актуальная</ComboBoxItem>
+            <ComboBoxItem>Не актуальная</ComboBoxItem>
+        </ComboBox>
+        <Button Click="Button_Click_1" Content="Загрузить статистические данные" Background="Black" BorderBrush="Black" Foreground="White" Margin="10,20"/>
+        <Button Click="Button_Click" Content="Добавить угрозу в модель" Background="Black" BorderBrush="Black" Foreground="White" Margin="10,20" />
+    </StackPanel>
+</Window>

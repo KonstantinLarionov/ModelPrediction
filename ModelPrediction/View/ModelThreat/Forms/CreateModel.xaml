@@ -1,0 +1,22 @@
+﻿<Window x:Class="ModelPrediction.View.ModelThreat.Forms.CreateModel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ModelPrediction.View.ModelThreat.Forms"
+        mc:Ignorable="d"
+        Title="Создание новой модели" Height="356" Width="404" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <StackPanel >
+        <Label Margin="10,10,0,0" Content="Наименование модели:" FontFamily="Century Gothic" FontStyle="Italic" FontSize="18"/>
+        <TextBox   Name="NameModel" BorderThickness="0,0,0,1" CaretBrush="Black" SelectionBrush="Black" Cursor="Pen" FontSize="18" Margin="15,0,13,0"/>
+        <Label Margin="10,10,0,0" Content="Наименование организации:" FontFamily="Century Gothic" FontStyle="Italic" FontSize="18"/>
+        <TextBox  Name="NameOrganization" BorderThickness="0,0,0,1" CaretBrush="Black" SelectionBrush="Black" Cursor="Pen" FontSize="18" Margin="15,0,13,0"/>
+        <Label Margin="10,10,0,0" Content="Тип модели" FontFamily="Century Gothic" FontStyle="Italic" FontSize="18"/>
+        <ComboBox  Name="TypeModel" BorderThickness="0,0,0,1"  Cursor="Pen" FontSize="18" Margin="15,0,13,0">
+            <ComboBoxItem>Экспертная</ComboBoxItem>
+            <ComboBoxItem>Расчетная</ComboBoxItem>
+            <ComboBoxItem>Предполагаемая</ComboBoxItem>
+        </ComboBox>
+        <Button Margin="10,30,10,10"  Content="Создать новую модель" Click="Button_Click" Background="Black" BorderBrush="Black" Foreground="White"/>
+    </StackPanel>
+</Window>
