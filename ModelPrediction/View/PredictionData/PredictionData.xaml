@@ -7,17 +7,17 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <DockPanel Height="Auto" LastChildFill="True" Margin="0,0,0,0" Width="Auto">
+             d:DesignHeight="705" d:DesignWidth="930" Loaded="UserControl_Loaded_1">
+    <DockPanel Height="Auto" LastChildFill="True" Margin="0,0,0,0" Width="Auto" Loaded="UserControl_Loaded">
         <materialDesign:Card Height="Auto" Width="Auto" DockPanel.Dock="Right" VerticalAlignment="Stretch" Margin="10,10,10,193">
             <DockPanel Width="226" LastChildFill="False" >
                 <DockPanel DockPanel.Dock="Top">
                     <Label Content="Aмплитудный" DockPanel.Dock="Left" FontSize="14" Margin="2, 2" FontWeight="Bold"/>
-                    <ToggleButton DockPanel.Dock="Left" Name="triggerColumn" Cursor="Hand"  Background="Black" Foreground="Black" />
+                    <ToggleButton DockPanel.Dock="Left" Name="triggerColumn" Cursor="Hand" Click="TriggerColumn_Click" Background="Black" Foreground="Black" />
                     <Label Content="Фазовый" DockPanel.Dock="Left" FontSize="14" Margin="2, 2" FontWeight="Bold"/>
                 </DockPanel>
                 <Label Content="Вид прогноза: " DockPanel.Dock="Top" FontSize="16" Margin="10, 2" FontWeight="Bold"/>
-                <ComboBox Width="200" DockPanel.Dock="Top" Name="typePrediction" Height="28" Cursor="Hand" >
+                <ComboBox Width="200" DockPanel.Dock="Top" Name="typePrediction" Height="28" Cursor="Hand" SelectionChanged="TypePrediction_SelectionChanged" >
                     <ComboBoxItem Content="Полигармонический" Cursor="Hand"/>
                     <ComboBoxItem Cursor="Hand" Content="Экспоненциальный"/>
                     <ComboBoxItem Cursor="Hand" Content="Скользящее среднее"/>
@@ -32,15 +32,15 @@
                     <Label Content="Ошибка: " DockPanel.Dock="Left" FontSize="16" Margin="10, 2" FontWeight="Bold"/>
                     <TextBox Name="need_error" DockPanel.Dock="Left" Margin="10, 2" Width="104" IsEnabled="False"/>
                 </DockPanel>
-                <Button DockPanel.Dock="Top" Margin="10,10,10,0" Content="Анализировать"  Background="White" BorderBrush="Black" Foreground="#DD000000" FontSize="18"/>
-                <Button DockPanel.Dock="Top" Margin="10,10,10,0" Content="Разложение"  Background="White" BorderBrush="Black" Foreground="#DD000000" FontSize="18"/>
+                <Button DockPanel.Dock="Top" Margin="10,10,10,0" Content="Анализировать" Click="Button_Click" Background="White" BorderBrush="Black" Foreground="#DD000000" FontSize="18"/>
+                <Button DockPanel.Dock="Top" Margin="10,10,10,0" Content="Разложение" Click="Button_Click_2" Background="White" BorderBrush="Black" Foreground="#DD000000" FontSize="18"/>
                 <Label Content="____________________________________________________________________________________________" DockPanel.Dock="Top" FontWeight="Bold" Height="29"/>
                 <DockPanel DockPanel.Dock="Left" Height="Auto">
                     <DockPanel DockPanel.Dock="Top" Height="39">
                         <Label DockPanel.Dock="Left" Content="Длина прогноза:" FontWeight="Bold" FontSize="16"/>
                         <TextBox DockPanel.Dock="Left" Width="73" Margin="0,5,0,11" Name="number"/>
                     </DockPanel>
-                    <Button DockPanel.Dock="Top" Margin="10,10,10,0" Content="Прогнозировать"  Background="White" BorderBrush="Black" Foreground="#DD000000" FontSize="18"/>
+                    <Button DockPanel.Dock="Top" Margin="10,10,10,0" Content="Прогнозировать" Click="Button_Click_1" Background="White" BorderBrush="Black" Foreground="#DD000000" FontSize="18"/>
                     <Label DockPanel.Dock="Top" Content="____________________________________________________________________________________________" FontWeight="Bold" Height="30"/>
                     <Label DockPanel.Dock="Top" Content="Критерий Дарбина-Уотсона" FontWeight="Bold" FontSize="14" Margin="10,0" Visibility="Collapsed"/>
                     <DataGrid DockPanel.Dock="Top" HorizontalContentAlignment="Stretch" Name="outDG" VerticalContentAlignment="Stretch" Height="Auto" Visibility="Collapsed">
@@ -62,7 +62,7 @@
             </materialDesign:Card>
             <materialDesign:Card VerticalAlignment="Stretch" HorizontalAlignment="Stretch" DockPanel.Dock="Bottom" Margin="0,10,10,0">
                 <DockPanel  DockPanel.Dock="Top"  LastChildFill="True"  >
-                    <lvc:CartesianChart Name="predictionChart"/>
+                    <lvc:CartesianChart Name="predictionChart"   DataClick="PredictionChart_DataClick"/>
                 </DockPanel>
             </materialDesign:Card>
         </DockPanel>

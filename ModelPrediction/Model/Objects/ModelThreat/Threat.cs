@@ -11,8 +11,8 @@ namespace ModelPrediction.Model.Objects.ModelThreat
     /// </summary>
     public enum Relevance
     {
-        Relevant,
-        NotRelevant
+        Актуальная,
+        НеАктуальная
     }
     /// <summary>
     /// Угроза

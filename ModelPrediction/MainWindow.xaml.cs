@@ -1,4 +1,5 @@
-﻿using ModelPrediction.View.ModelThreat;
+﻿using ModelPrediction.View;
+using ModelPrediction.View.ModelThreat;
 using ModelPrediction.ViewModel.ModelThreat;
 using System;
 using System.Collections.Generic;
@@ -22,15 +23,17 @@ namespace ModelPrediction
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ModelThreat ModelThreat;
+        private ModelPrediction.View.ModelThreat.ModelThreat ModelThreat;
         private AnaliticData AnaliticData;
         private PredictionData PredictionData;
+        private OutputePanel OutputePanel;
         public MainWindow()
         {
             InitializeComponent();
-            ModelThreat = new ModelThreat();
+            ModelThreat = new ModelPrediction.View.ModelThreat.ModelThreat();
             AnaliticData = new AnaliticData();
             PredictionData = new PredictionData();
+            OutputePanel = new OutputePanel();
             ModelThreatVM.SetLabels(nameModel, countThreat, dateCreate, nameThreat, number, countData);
         }
 
@@ -80,7 +83,7 @@ namespace ModelPrediction
                     break;
                 case "result":
                     panelView.Children.Clear();
-                    panelView.Children.Add(ModelThreat);
+                    panelView.Children.Add(OutputePanel);
                     break;
                 case "about":
                     panelView.Children.Clear();

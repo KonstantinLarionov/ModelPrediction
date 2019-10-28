@@ -124,11 +124,11 @@ namespace ModelPrediction.ViewModel.ModelThreat.Forms
                     case "actual":
                         if (item.Text == "Актуальная")
                         {
-                            threat.Relevance = Relevance.Relevant;
+                            threat.Relevance = Relevance.Актуальная;
                         }
                         else
                         {
-                            threat.Relevance = Relevance.NotRelevant;
+                            threat.Relevance = Relevance.НеАктуальная;
                         }
                         break;
                     default:
