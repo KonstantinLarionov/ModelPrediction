@@ -1,5 +1,4 @@
 ﻿using AForge.Math;
-using Microsoft.Office.Interop.Excel;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ using System.Windows;
 
 namespace ModelPrediction.Model
 {
-    class MainData
+    public class MainData
     {
         private double[] main_data { get; set; }
 
@@ -83,37 +82,38 @@ namespace ModelPrediction.Model
         }
 
         public void Load_XLS(string p)
-        {
-            Microsoft.Office.Interop.Excel.Application xlsApp = null;
-            try
-            {
-                xlsApp = new Microsoft.Office.Interop.Excel.Application();
-            }
-            catch
-            {
-                MessageBox.Show("Excel не может быть запущен. Возможно Excel не установлен на данном компьютере.");
-                return;
-            }
+        { 
+        //{
+        //    Microsoft.Office.Interop.Excel.Application xlsApp = null;
+        //    try
+        //    {
+        //        xlsApp = new Microsoft.Office.Interop.Excel.Application();
+        //    }
+        //    catch
+        //    {
+        //        MessageBox.Show("Excel не может быть запущен. Возможно Excel не установлен на данном компьютере.");
+        //        return;
+        //    }
 
-            //Displays Excel so you can see what is happening
-            //xlsApp.Visible = true;
-            try
-            {
-                Workbook wb = xlsApp.Workbooks.Open(p,
-                    0, true, 5, "", "", true, XlPlatform.xlWindows, "\t", false, false, 0, true);
-                Sheets sheets = wb.Worksheets;
-                Worksheet ws = (Worksheet)sheets.get_Item(1);
+        //    //Displays Excel so you can see what is happening
+        //    //xlsApp.Visible = true;
+        //    try
+        //    {
+        //        Workbook wb = xlsApp.Workbooks.Open(p,
+        //            0, true, 5, "", "", true, XlPlatform.xlWindows, "\t", false, false, 0, true);
+        //        Sheets sheets = wb.Worksheets;
+        //        Worksheet ws = (Worksheet)sheets.get_Item(1);
 
-                Range firstColumn = ws.UsedRange.Columns[1];
-                System.Array myvalues = (System.Array)firstColumn.Cells.Value;
-                double[] data = myvalues.OfType<object>().Select(o => Convert.ToDouble(o.ToString().Replace(".", ","))).ToArray();
-                SetData(data);
-            }
-            catch
-            {
-                MessageBox.Show("Не получилось собрать данные. Проверьте правильность составления документа! см. Руководство");
-                return;
-            }
+        //        Range firstColumn = ws.UsedRange.Columns[1];
+        //        System.Array myvalues = (System.Array)firstColumn.Cells.Value;
+        //        double[] data = myvalues.OfType<object>().Select(o => Convert.ToDouble(o.ToString().Replace(".", ","))).ToArray();
+        //        SetData(data);
+        //    }
+        //    catch
+        //    {
+        //        MessageBox.Show("Не получилось собрать данные. Проверьте правильность составления документа! см. Руководство");
+        //        return;
+        //    }
         }
 
         public static AForge.Math.Complex[] FFTClear(AForge.Math.Complex[] inpute)

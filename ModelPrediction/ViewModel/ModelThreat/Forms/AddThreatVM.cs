@@ -1,8 +1,8 @@
-﻿using Microsoft.Office.Interop.Excel;
-using ModelPrediction.Model.Entity;
+﻿using ModelPrediction.Model.Entity;
 using ModelPrediction.Model.Objects.ModelThreat;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,62 +29,105 @@ namespace ModelPrediction.ViewModel.ModelThreat.Forms
 
         private List<StatisticData> SetStatisticData()
         {
-            Microsoft.Office.Interop.Excel.Application xlsApp = null;
             try
             {
-                xlsApp = new Microsoft.Office.Interop.Excel.Application();
-            }
-            catch
-            {
-                MessageBox.Show("Excel не может быть запущен. Возможно Excel не установлен на данном компьютере.");
-                return null ;
-            }
-            try
-            {
-                Workbook wb = xlsApp.Workbooks.Open(PathToData,
-                    0, true, 5, "", "", true, XlPlatform.xlWindows, "\t", false, false, 0, true);
-                Sheets sheets = wb.Worksheets;
-                Worksheet ws = (Worksheet)sheets.get_Item(1);
-
-                Range secondColumn = ws.UsedRange.Columns[2];
-                System.Array myvalues = (System.Array)secondColumn.Cells.Value;
-                double[] data = myvalues.OfType<object>().Select(o => Double(o.ToString())).ToArray();
-                Range firstColumn = ws.UsedRange.Columns[1];
-                System.Array myTimes = (System.Array)firstColumn.Cells.Value;
-                DateTime[] dateTime = null;
-                int[] x = null;
-                try
+                List<string> fill = new List<string>();
+                using (StreamReader sc = new StreamReader(PathToData))
                 {
-                    dateTime = myTimes.OfType<object>().Select(o => Convert.ToDateTime(o.ToString())).ToArray();
+                    sc.ReadLine();
+                    while (!sc.EndOfStream)
+                    {
+                        fill.Add(sc.ReadLine());
+                    }
                 }
-                catch
+
+                List<string> info2 = new List<string>();
+                for (int j = 0; j < fill.Count; j++)
                 {
-                    x = myTimes.OfType<object>().Select(o => Convert.ToInt32(o.ToString())).ToArray();
+                    info2.Add(fill[j].Split('/')[1].Replace(".", ","));
+                }
+
+                double[] data = new double[info2.Count];
+
+                for (int i = 0; i < info2.Count; i++)
+                {
+                    try
+                    {
+                        data[i] += double.Parse(info2[i]);
+                    }
+                    catch
+                    {
+                        data[i] += 0;
+                    }
                 }
 
                 List<StatisticData> statistics = new List<StatisticData>();
-                if (dateTime != null)
+
+                for (int i = 0; i < data.Length; i++)
                 {
-                    for (int i = 0; i < data.Length; i++)
+                    statistics.Add(new StatisticData()
                     {
-                        statistics.Add(new StatisticData()
-                        {
-                            Damage = data[i],
-                            Time = dateTime[i]
-                        });
-                    }
+                        Damage = data[i],
+                        X = i
+                    });
                 }
-                else
-                {
-                    for (int i = 0; i < data.Length; i++)
-                    {
-                        statistics.Add(new StatisticData()
-                        {
-                            Damage = data[i],
-                            X = x[i]
-                        });
-                    }
-                }
+                
+                //    Microsoft.Office.Interop.Excel.Application xlsApp = null;
+                //    try
+                //    {
+                //        xlsApp = new Microsoft.Office.Interop.Excel.Application();
+                //    }
+                //    catch
+                //    {
+                //        MessageBox.Show("Excel не может быть запущен. Возможно Excel не установлен на данном компьютере.");
+                //        return null ;
+                //    }
+                //    try
+                //    {
+                //        Workbook wb = xlsApp.Workbooks.Open(PathToData,
+                //            0, true, 5, "", "", true, XlPlatform.xlWindows, "\t", false, false, 0, true);
+                //        Sheets sheets = wb.Worksheets;
+                //        Worksheet ws = (Worksheet)sheets.get_Item(1);
+
+                //        Range secondColumn = ws.UsedRange.Columns[2];
+                //        System.Array myvalues = (System.Array)secondColumn.Cells.Value;
+                //        double[] data = myvalues.OfType<object>().Select(o => Double(o.ToString())).ToArray();
+                //        Range firstColumn = ws.UsedRange.Columns[1];
+                //        System.Array myTimes = (System.Array)firstColumn.Cells.Value;
+                //        DateTime[] dateTime = null;
+                //        int[] x = null;
+                //        try
+                //        {
+                //            dateTime = myTimes.OfType<object>().Select(o => Convert.ToDateTime(o.ToString())).ToArray();
+                //        }
+                //        catch
+                //        {
+                //            x = myTimes.OfType<object>().Select(o => Convert.ToInt32(o.ToString())).ToArray();
+                //        }
+
+                //        List<StatisticData> statistics = new List<StatisticData>();
+                //        if (dateTime != null)
+                //        {
+                //            for (int i = 0; i < data.Length; i++)
+                //            {
+                //                statistics.Add(new StatisticData()
+                //                {
+                //                    Damage = data[i],
+                //                    Time = dateTime[i]
+                //                });
+                //            }
+                //        }
+                //        else
+                //        {
+                //            for (int i = 0; i < data.Length; i++)
+                //            {
+                //                statistics.Add(new StatisticData()
+                //                {
+                //                    Damage = data[i],
+                //                    X = x[i]
+                //                });
+                //            }
+                //        }
                 return statistics;
             }
             catch
@@ -124,11 +167,11 @@ namespace ModelPrediction.ViewModel.ModelThreat.Forms
                     case "actual":
                         if (item.Text == "Актуальная")
                         {
-                            threat.Relevance = Relevance.Relevant;
+                            threat.Relevance = Relevance.Актуальная;
                         }
                         else
                         {
-                            threat.Relevance = Relevance.NotRelevant;
+                            threat.Relevance = Relevance.НеАктуальная;
                         }
                         break;
                     default:

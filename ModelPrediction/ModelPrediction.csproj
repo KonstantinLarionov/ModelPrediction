@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>ModelPrediction</RootNamespace>
     <AssemblyName>ModelPrediction</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -17,6 +17,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -68,15 +69,14 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=2.6.0.325, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.2.6.0\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -97,6 +97,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Analitic.cs" />
+    <Compile Include="Model\Darbin.cs" />
+    <Compile Include="Model\DataM.cs" />
+    <Compile Include="Model\DataOUT.cs" />
     <Compile Include="Model\Drawer.cs" />
     <Compile Include="Model\Entity\ModelThreatContext.cs" />
     <Compile Include="Model\Level.cs" />
@@ -104,11 +108,16 @@
     <Compile Include="Model\Objects\ModelThreat\StatisticData.cs" />
     <Compile Include="Model\Objects\ModelThreat\ModelThreat.cs" />
     <Compile Include="Model\Objects\ModelThreat\Threat.cs" />
+    <Compile Include="Model\PredictionM.cs" />
+    <Compile Include="Model\PredictionUpdate.cs" />
     <Compile Include="ViewModel\AnaliticData\AnaliticDataVM.cs" />
+    <Compile Include="ViewModel\PredictionData\DisintegreadVM.cs" />
+    <Compile Include="ViewModel\PredictionData\PredictionDataVM.cs" />
     <Compile Include="ViewModel\ModelThreat\Forms\AddThreatVM.cs" />
     <Compile Include="ViewModel\ModelThreat\Forms\CreateModelVM.cs" />
     <Compile Include="ViewModel\ModelThreat\Forms\ShowModelVM.cs" />
     <Compile Include="ViewModel\ModelThreat\ModelThreatVM.cs" />
+    <Compile Include="ViewModel\Result\OutDataVM.cs" />
     <Compile Include="View\About\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
@@ -127,11 +136,17 @@
     <Compile Include="View\ModelThreat\ModelThreat.xaml.cs">
       <DependentUpon>ModelThreat.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\PredictionData\Disintegreated.xaml.cs">
+      <DependentUpon>Disintegreated.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PredictionData\Disintegreated2.xaml.cs">
+      <DependentUpon>Disintegreated2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PredictionData\PredictionData.xaml.cs">
       <DependentUpon>PredictionData.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Result\Result.xaml.cs">
-      <DependentUpon>Result.xaml</DependentUpon>
+    <Compile Include="View\Result\OutputePanel.xaml.cs">
+      <DependentUpon>OutputePanel.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -169,11 +184,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\PredictionData\Disintegreated.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PredictionData\Disintegreated2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\PredictionData\PredictionData.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Result\Result.xaml">
+    <Page Include="View\Result\OutputePanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -207,8 +230,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModel\About\" />
-    <Folder Include="ViewModel\PredictionData\" />
-    <Folder Include="ViewModel\Result\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Slideshow-chart_icon-icons.com_51900.ico" />

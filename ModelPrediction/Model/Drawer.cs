@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace ModelPrediction.Model
 {
-    class Drawer
+    public class Drawer
     {
         public CartesianChart Charts { get; set; }
 

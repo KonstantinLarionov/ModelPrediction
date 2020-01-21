@@ -1,0 +1,146 @@
+﻿<UserControl x:Class="ModelPrediction.View.OutputePanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:local="clr-namespace:ModelPrediction.View"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" Margin="0" Background="#FFDFE2D7" d:DesignWidth="900" d:DesignHeight="700" Loaded="UserControl_Loaded" >
+
+    <DockPanel Height="Auto" LastChildFill="True" Margin="0,0,0,0" Width="Auto">
+        <materialDesign:Card Height="Auto" Width="Auto" DockPanel.Dock="Right" VerticalAlignment="Stretch" Margin="10">
+            <DockPanel Width="226" LastChildFill="False" Height="Auto">
+                <Label Content="Основные характеристики" DockPanel.Dock="Top" FontSize="16" Margin="2, 0" FontWeight="Bold"/>
+                <Label Content="Прогноза" DockPanel.Dock="Top" FontSize="16" Margin="70, 0" FontWeight="Bold"/>
+                <DockPanel Width="226" Height="Auto" LastChildFill="False"  HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                    <DockPanel DockPanel.Dock="Top">
+                        <Button Margin="5,5" Width="80" Click="Button_Click" DockPanel.Dock="Left" Height="25" Padding="0" Background="Black" BorderBrush="Black" >
+                            <Label Margin="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Foreground="#DDFDF9F9">
+                                МАКС =
+                            </Label>
+                        </Button>
+                        <TextBox Name="МАКС" TextAlignment="Center" FontSize="16" Margin="6,0" Foreground="Black"/>
+
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Top">
+                        <Button Margin="5,5" Click="Button_Click_1" Width="80" DockPanel.Dock="Left" Height="25" Padding="0" Background="Black" BorderBrush="Black" >
+                            <Label Margin="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Foreground="#DDFDFBFB">МИН =</Label>
+                        </Button>
+                        <TextBox Name="МИН" TextAlignment="Center" FontSize="16" Margin="6,0"/>
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Top">
+                        <Button Margin="5,5" Click="Button_Click_2" Width="80" DockPanel.Dock="Left" Height="25" Padding="0" Background="Black" BorderBrush="Black" >
+                            <Label Margin="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Foreground="#DDFFFFFF">САЗ =</Label>
+                        </Button>
+                        <TextBox Name="САЗ" TextAlignment="Center" FontSize="16" Margin="6,0"/>
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Top" Visibility="Collapsed">
+                        <Button Margin="5,5" Click="Button_Click_3" Width="80" DockPanel.Dock="Left" Height="25" Padding="0" Background="Black" BorderBrush="Black" >
+                            <Label Margin="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Foreground="#DDFFFBFB">MO =</Label>
+                        </Button>
+                        <TextBox Name="МО" TextAlignment="Center" FontSize="16"  Margin="6,0"/>
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Top">
+                        <Button Margin="5,5" Click="Button_Click_4" Width="80" DockPanel.Dock="Left" Height="25" Padding="0" Background="Black" BorderBrush="Black" >
+                            <Label Margin="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Foreground="#DDFBF9F9">ME =</Label>
+                        </Button>
+                        <TextBox Name="МЕ" TextAlignment="Center" FontSize="16"  Margin="6,0"/>
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Top">
+                        <Button Margin="5,5" Click="Button_Click_5" Width="80" DockPanel.Dock="Left" Height="25" Padding="0" Background="Black" BorderBrush="Black" >
+                            <Label Margin="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Foreground="#DDFBFBFB">РВ =</Label>
+                        </Button>
+                        <TextBox Name="РВ" TextAlignment="Center" FontSize="16"  Margin="6,0"/>
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Top">
+                        <Button Margin="5,5" Click="Button_Click_6" Width="80" DockPanel.Dock="Left" Height="25" Padding="0" Background="Black" BorderBrush="Black" >
+                            <Label Margin="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Foreground="#DDFBFBFB">ДИСП =</Label>
+                        </Button>
+                        <TextBox Name="ДИСП" TextAlignment="Center" FontSize="16"  Margin="6,0"/>
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Top">
+                        <Button Margin="5,5" Click="Button_Click_7" Width="80" DockPanel.Dock="Left" Height="25" Padding="0" Background="Black" BorderBrush="Black" >
+                            <Label Margin="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Foreground="#DDFFFFFF">СКО =</Label>
+                        </Button>
+                        <TextBox Name="СКО" TextAlignment="Center" FontSize="16"  Margin="6,0"/>
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Top">
+                        <Button Margin="5,5" Click="Button_Click_8" Width="80" DockPanel.Dock="Left" Height="25" Padding="0" Background="Black" BorderBrush="Black" >
+                            <Label Margin="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Foreground="#DDFFFFFF">ОС =</Label>
+                        </Button>
+                        <TextBox Name="ОС" TextAlignment="Center" FontSize="16"  Margin="6,0"/>
+                    </DockPanel>
+                    <DockPanel DockPanel.Dock="Top">
+                        <Button Margin="5,5" Click="Button_Click_9" Width="80" DockPanel.Dock="Left" Height="25" Padding="0" Background="Black" BorderBrush="Black" >
+                            <Label Margin="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Foreground="#DDFDFDFD">КВ =</Label>
+                        </Button>
+                        <TextBox Name="КВ" TextAlignment="Center" FontSize="16"  Margin="6,0"/>
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Top">
+                        <Button Margin="5,5" Click="Button_Click_10" Width="80" DockPanel.Dock="Left" Height="25" Padding="0" Background="Black" BorderBrush="Black" >
+                            <Label Margin="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Foreground="#DDFBFBFB">САОП =</Label>
+                        </Button>
+                        <TextBox Name="САОП" TextAlignment="Center" FontSize="16"  Margin="6,0"/>
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Top">
+                        <Button Margin="5,5" Click="Button_Click_11" Width="80" DockPanel.Dock="Left" Height="25" Padding="0" Background="Black" BorderBrush="Black" >
+                            <Label Margin="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Foreground="#DDFDFBFB">САО =</Label>
+                        </Button>
+                        <TextBox Name="САО" TextAlignment="Center" FontSize="16"  Margin="6,0"/>
+                    </DockPanel>
+                    <DockPanel DockPanel.Dock="Top">
+                        <Button Margin="5,5" Click="Button_Click_12" Width="80" DockPanel.Dock="Left" Height="25" Padding="0" Background="Black" BorderBrush="Black" >
+                            <Label Margin="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Foreground="#DDF9F7F7">ККСКО =</Label>
+                        </Button>
+                        <TextBox Name="ККСКО" TextAlignment="Center" FontSize="16"  Margin="6,0"/>
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Top">
+                        <Button Margin="5,5" Click="Button_Click_13" Width="80" DockPanel.Dock="Left" Height="25" Padding="0" Background="Black" BorderBrush="Black" >
+                            <Label Margin="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Foreground="#DDF9F7F7">СО =</Label>
+                        </Button>
+                        <TextBox Name="СО" TextAlignment="Center" FontSize="16"  Margin="6,0"/>
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Top">
+                        <Button Margin="5,5" Width="80" Click="Button_Click_14" DockPanel.Dock="Left" Height="25" Padding="0" Background="Black" BorderBrush="Black" >
+                            <Label Margin="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Foreground="#DDFBF7F7">СТО =</Label>
+                        </Button>
+                        <TextBox Name="СТО" TextAlignment="Center" FontSize="16"  Margin="6,0"/>
+                    </DockPanel>
+
+                </DockPanel>
+
+            </DockPanel>
+        </materialDesign:Card>
+        <materialDesign:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,10,10,10">
+            <DockPanel LastChildFill="True" >
+                <DockPanel>
+                    <DataGrid Name="dgOUT" AutoGenerateColumns="False" FontSize="20" GridLinesVisibility="All" HorizontalGridLinesBrush="Black">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding nExp}" Width="*"  Header="№ Эксперимента"/>
+                            <DataGridTextColumn Binding="{Binding t}" Width="*"  Header="t"/>
+                            <DataGridTextColumn Binding="{Binding xmt}" Width="*" Header="Основные данные x(t)"/>
+                            <DataGridTextColumn Binding="{Binding xpt}" Width="*" Header="Данные прогноза ẋ(t) "/>
+                            <DataGridTextColumn Binding="{Binding err}" Width="*"  Header="Ошибка прогноза E"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </DockPanel>
+        </materialDesign:Card>
+    </DockPanel>
+
+</UserControl>

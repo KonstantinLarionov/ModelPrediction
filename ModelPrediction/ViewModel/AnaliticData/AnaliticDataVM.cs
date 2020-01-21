@@ -141,10 +141,12 @@ namespace ModelPrediction.ViewModel.AnaliticData
                 }
             }
         }
+        public static double[] ValueLevels;
         public void PaintArea(CartesianChart cc, List<Level> values)
         {
             Drawer drawer = new Drawer(cc);
-            drawer.DrawAreas(values.Select(x => x.Value).ToArray(),Threat.Data.Count);
+            ValueLevels = values.Select(x => x.Value).ToArray();
+            drawer.DrawAreas(ValueLevels, Threat.Data.Count);
         }
     }
 }

@@ -26,7 +26,11 @@ namespace ModelPrediction.View.ModelThreat
         public ModelThreat()
         {
             InitializeComponent();
-            VM = new ModelThreatVM(threats);
+            if (VM == null)
+            {
+                VM = new ModelThreatVM(threats);
+            }
+           
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -49,8 +53,15 @@ namespace ModelPrediction.View.ModelThreat
 
         private void Threats_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var Threat = (Model.Objects.ModelThreat.Threat)threats.SelectedItems[0];
-            ModelThreatVM.SetInfoThreat(Threat);
+            try
+            {
+                var Threat = (Model.Objects.ModelThreat.Threat)threats.SelectedItems[0];
+                ModelThreatVM.SetInfoThreat(Threat);
+            }
+            catch
+            { 
+            
+            }
         }
     }
 }
