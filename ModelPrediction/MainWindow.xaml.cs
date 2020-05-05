@@ -87,8 +87,7 @@ namespace ModelPrediction
                     panelView.Children.Add(OutputePanel);
                     break;
                 case "about":
-                    panelView.Children.Clear();
-                    panelView.Children.Add(ModelThreat);
+                    MessageBox.Show("Программа: \"Метод анализа и прогнозирования параметров модели угроз на основе полигармонического полинома\"\nАвторы: Т.З. Аралбаев, К.О. Ларионов.\nОписание: Программа предназначена для исследования модели полигармонического полинома в рамках статистических данных модели угроз.");
                     break;
             }
             

@@ -1,4 +1,5 @@
-﻿using ModelPrediction.Model.Entity;
+﻿using Microsoft.Office.Interop.Excel;
+using ModelPrediction.Model.Entity;
 using ModelPrediction.Model.Objects.ModelThreat;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace ModelPrediction.ViewModel.ModelThreat.Forms
 {
@@ -29,110 +31,110 @@ namespace ModelPrediction.ViewModel.ModelThreat.Forms
 
         private List<StatisticData> SetStatisticData()
         {
-            try
+            var ext = Path.GetExtension(PathToData);
+            if (ext == ".txt")
             {
-                List<string> fill = new List<string>();
-                using (StreamReader sc = new StreamReader(PathToData))
+                try
                 {
-                    sc.ReadLine();
-                    while (!sc.EndOfStream)
+                    List<string> fill = new List<string>();
+                    using (StreamReader sc = new StreamReader(PathToData))
                     {
-                        fill.Add(sc.ReadLine());
+                        sc.ReadLine();
+                        while (!sc.EndOfStream)
+                        {
+                            fill.Add(sc.ReadLine());
+                        }
                     }
-                }
 
-                List<string> info2 = new List<string>();
-                for (int j = 0; j < fill.Count; j++)
-                {
-                    info2.Add(fill[j].Split('/')[1].Replace(".", ","));
-                }
-
-                double[] data = new double[info2.Count];
-
-                for (int i = 0; i < info2.Count; i++)
-                {
-                    try
+                    List<string> info2 = new List<string>();
+                    for (int j = 0; j < fill.Count; j++)
                     {
-                        data[i] += double.Parse(info2[i]);
+                        info2.Add(fill[j].Split('/')[1].Replace(".", ","));
                     }
-                    catch
+
+                    double[] data = new double[info2.Count];
+
+                    for (int i = 0; i < info2.Count; i++)
                     {
-                        data[i] += 0;
+                        try
+                        {
+                            data[i] += double.Parse(info2[i]);
+                        }
+                        catch
+                        {
+                            data[i] += 0;
+                        }
                     }
-                }
 
-                List<StatisticData> statistics = new List<StatisticData>();
+                    List<StatisticData> statistics = new List<StatisticData>();
 
-                for (int i = 0; i < data.Length; i++)
-                {
-                    statistics.Add(new StatisticData()
+                    for (int i = 0; i < data.Length; i++)
                     {
-                        Damage = data[i],
-                        X = i
-                    });
+                        statistics.Add(new StatisticData()
+                        {
+                            Damage = data[i],
+                            X = i
+                        });
+                    }
+                    return statistics;
                 }
-                
-                //    Microsoft.Office.Interop.Excel.Application xlsApp = null;
-                //    try
-                //    {
-                //        xlsApp = new Microsoft.Office.Interop.Excel.Application();
-                //    }
-                //    catch
-                //    {
-                //        MessageBox.Show("Excel не может быть запущен. Возможно Excel не установлен на данном компьютере.");
-                //        return null ;
-                //    }
-                //    try
-                //    {
-                //        Workbook wb = xlsApp.Workbooks.Open(PathToData,
-                //            0, true, 5, "", "", true, XlPlatform.xlWindows, "\t", false, false, 0, true);
-                //        Sheets sheets = wb.Worksheets;
-                //        Worksheet ws = (Worksheet)sheets.get_Item(1);
-
-                //        Range secondColumn = ws.UsedRange.Columns[2];
-                //        System.Array myvalues = (System.Array)secondColumn.Cells.Value;
-                //        double[] data = myvalues.OfType<object>().Select(o => Double(o.ToString())).ToArray();
-                //        Range firstColumn = ws.UsedRange.Columns[1];
-                //        System.Array myTimes = (System.Array)firstColumn.Cells.Value;
-                //        DateTime[] dateTime = null;
-                //        int[] x = null;
-                //        try
-                //        {
-                //            dateTime = myTimes.OfType<object>().Select(o => Convert.ToDateTime(o.ToString())).ToArray();
-                //        }
-                //        catch
-                //        {
-                //            x = myTimes.OfType<object>().Select(o => Convert.ToInt32(o.ToString())).ToArray();
-                //        }
-
-                //        List<StatisticData> statistics = new List<StatisticData>();
-                //        if (dateTime != null)
-                //        {
-                //            for (int i = 0; i < data.Length; i++)
-                //            {
-                //                statistics.Add(new StatisticData()
-                //                {
-                //                    Damage = data[i],
-                //                    Time = dateTime[i]
-                //                });
-                //            }
-                //        }
-                //        else
-                //        {
-                //            for (int i = 0; i < data.Length; i++)
-                //            {
-                //                statistics.Add(new StatisticData()
-                //                {
-                //                    Damage = data[i],
-                //                    X = x[i]
-                //                });
-                //            }
-                //        }
-                return statistics;
+                catch
+                {
+                    MessageBox.Show("Не получилось собрать данные. Проверьте правильность составления документа! см. Руководство");
+                    return null;
+                }
             }
-            catch
+            else if (ext == ".xls" || ext == ".xlsx")
             {
-                MessageBox.Show("Не получилось собрать данные. Проверьте правильность составления документа! см. Руководство");
+                Microsoft.Office.Interop.Excel.Application xlsApp = null;
+                try
+                {
+                    xlsApp = new Microsoft.Office.Interop.Excel.Application();
+                }
+                catch
+                {
+                    MessageBox.Show("Возникла проблема при добавлении статистических данных через { API Excel }. Возможно на компьютере не установлен Excel.");
+                    return null;
+                }
+
+                try
+                {
+                    Workbook wb = xlsApp.Workbooks.Open(PathToData,
+                        0, true, 5, "", "", true, XlPlatform.xlWindows, "\t", false, false, 0, true);
+                    Sheets sheets = wb.Worksheets;
+                    Worksheet ws = (Worksheet)sheets.get_Item(1);
+
+                    Range firstColumn = ws.UsedRange.Columns[2];
+                    System.Array myvalues = (System.Array)firstColumn.Cells.Value;
+                    List<StatisticData> statistics = new List<StatisticData>();
+                    int count = 0;
+                    foreach (var item in myvalues)
+                    {
+                        try
+                        {
+                            statistics.Add(new StatisticData()
+                            {
+                                Damage = Convert.ToInt32(item),
+                                X = count
+                            });
+                            count++;
+                        }
+                        catch
+                        {
+                            continue;
+                        }
+                    }
+                    
+                    return statistics;
+                }
+                catch(Exception e)
+                {
+                    MessageBox.Show("Не получилось собрать данные. Проверьте правильность составления документа! см. Руководство");
+                    return null;
+                }
+            }
+            else
+            {
                 return null;
             }
         }
@@ -206,4 +208,5 @@ namespace ModelPrediction.ViewModel.ModelThreat.Forms
             return Convert.ToDouble(str.Replace(".",","));
         }
     }
+    
 }

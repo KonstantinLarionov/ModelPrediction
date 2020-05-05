@@ -79,6 +79,8 @@ namespace ModelPrediction.Model
                         prediction.Add(bufferPrediction + trend[i]);
                     }
 
+
+                    #region Проверка Дарбина
                     double darbinC = 0;
                     double darbinZ = 0;
                     for (int i = 1; i < data.Count; i++)
@@ -99,6 +101,7 @@ namespace ModelPrediction.Model
                         darbins.Add(bufferDarbin);
                         
                     }
+                    #endregion
                 }
             }
             else
@@ -110,7 +113,7 @@ namespace ModelPrediction.Model
                     //Работаем с prediction и data
                     //Условие по дарбину и на выход из цикла
                     //Записать значение дарбина
-                    for (int j = 0; j < data.Count/2; j++) //Цикл гармоник
+                    for (int j = 0; j < data.Count/2-1; j++) //Цикл гармоник
                     {
                         bufferPrediction += harmonics[j][i];
                     }
