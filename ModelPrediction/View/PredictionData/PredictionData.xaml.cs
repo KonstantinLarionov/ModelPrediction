@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ModelThreat.View;
+using System.Windows.Controls.Primitives;
 
 namespace ModelPrediction.View.ModelThreat
 {
@@ -125,11 +126,11 @@ namespace ModelPrediction.View.ModelThreat
             {
                 if (from.Text != "" && to.Text != "" || from.Text == "0" && to.Text == "0")
                 {
-                    PredictionDataVM.GetAnaliticsPoly(predictionChart, outDG, data, Convert.ToInt32(from.Text), Convert.ToInt32(to.Text),Convert.ToBoolean(darbin.IsChecked), dn.Text, dv.Text);
+                    PredictionDataVM.GetAnaliticsPoly(predictionChart, outDG, data, Convert.ToInt32(from.Text), Convert.ToInt32(to.Text),Convert.ToBoolean(darbin.IsChecked), dn.Text, dv.Text,need_error.Text);
                 }
                 else
                 {
-                    PredictionDataVM.GetAnaliticsPoly(predictionChart, outDG, data, 0, data.Length - 1, Convert.ToBoolean(darbin.IsChecked), dn.Text, dv.Text);
+                    PredictionDataVM.GetAnaliticsPoly(predictionChart, outDG, data, 0, data.Length - 1, Convert.ToBoolean(darbin.IsChecked), dn.Text, dv.Text, need_error.Text);
                 }
             }
             else if (typePrediction.Text == "Экспоненциальный")
@@ -209,14 +210,14 @@ namespace ModelPrediction.View.ModelThreat
 
         private void TypePrediction_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (typePrediction.SelectedIndex == 1)
-            {   
-                need_error.IsEnabled = true;
-            }
-            else
-            {
-                need_error.IsEnabled = false;
-            }
+            //if (typePrediction.SelectedIndex == 1)
+            //{   
+            //    need_error.IsEnabled = true;
+            //}
+            //else
+            //{
+            //    need_error.IsEnabled = false;
+            //}
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -250,6 +251,16 @@ namespace ModelPrediction.View.ModelThreat
             try
             { }
             catch { }
+        }
+
+        private void darbin_Checked(object sender, RoutedEventArgs e)
+        {
+            need_error.IsEnabled = false;
+        }
+
+        private void darbin_Unchecked(object sender, RoutedEventArgs e)
+        {
+            need_error.IsEnabled = true;
         }
     }
 }

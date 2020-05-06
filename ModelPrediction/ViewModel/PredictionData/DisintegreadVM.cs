@@ -131,7 +131,6 @@ namespace Prediction.ViewModel
                         continue;
                     }
                 }
-               
             }
             Drawer pen = new Drawer(cc);
             pen.DrawLinerChart(values, "Сезонная компонента");

@@ -9,10 +9,11 @@ namespace ModelPrediction.Model
     public static class PredictionUpdate
     {
         public static List<Darbin> darbins = new List<Darbin>();
-        public static List<double> Prediction(List<double> data, int number, bool darbin = false, double dn = 1.75, double dv = 2.25)
+        public static List<double> Prediction(List<double> data, int number, bool darbin = false, double dn = 1.75, double dv = 2.25, string count = "")
         {
             List<double> prediction = new List<double>();
-            double[] trend = TrendLine(data, number);
+            //double[] trend = TrendLine(data, number);
+            var trend = TrendLine2(data, number);
             double y_mean = data.Average(); // Среднее значение массива
 
             #region Подсчет коэффициентов
@@ -76,9 +77,8 @@ namespace ModelPrediction.Model
                         {
                             bufferPrediction += harmonics[j][i];
                         }
-                        prediction.Add(bufferPrediction + trend[i]);
+                        prediction.Add(bufferPrediction + trend/* /*trend[i] (data[i] - bufferPrediction)*/);
                     }
-
 
                     #region Проверка Дарбина
                     double darbinC = 0;
@@ -91,7 +91,7 @@ namespace ModelPrediction.Model
                     Darbin bufferDarbin = new Darbin();
                     bufferDarbin.N = k.ToString();
                     bufferDarbin.D = darbinC / darbinZ;
-                    if (bufferDarbin.D >= dn )
+                    if (bufferDarbin.D >= dn && bufferDarbin.D <= dv)
                     {
                         darbins.Add(bufferDarbin);
                         break;
@@ -99,25 +99,43 @@ namespace ModelPrediction.Model
                     else
                     {
                         darbins.Add(bufferDarbin);
-                        
                     }
                     #endregion
                 }
             }
             else
             {
-                //Суммирование гармоник
-                for (int i = 0; i < data.Count + number; i++) // Цикл элементов
+                if (count != "" || count != null || count != "0" )
                 {
-                    double bufferPrediction = 0;
-                    //Работаем с prediction и data
-                    //Условие по дарбину и на выход из цикла
-                    //Записать значение дарбина
-                    for (int j = 0; j < data.Count/2-1; j++) //Цикл гармоник
+                    //Суммирование гармоник
+                    for (int i = 0; i < data.Count + number; i++) // Цикл элементов
                     {
-                        bufferPrediction += harmonics[j][i];
+                        double bufferPrediction = 0;
+                        //Работаем с prediction и data
+                        //Условие по дарбину и на выход из цикла
+                        //Записать значение дарбина
+                        for (int j = 0; j < Convert.ToInt32(count); j++) //Цикл гармоник
+                        {
+                            bufferPrediction += harmonics[j][i];
+                        }
+                        prediction.Add(bufferPrediction + trend/*+ (data[i] - bufferPrediction)*/  /*+ trend[i]*/);
                     }
-                    prediction.Add(bufferPrediction + trend[i]);
+                }
+                else
+                {
+                    //Суммирование гармоник
+                    for (int i = 0; i < data.Count + number; i++) // Цикл элементов
+                    {
+                        double bufferPrediction = 0;
+                        //Работаем с prediction и data
+                        //Условие по дарбину и на выход из цикла
+                        //Записать значение дарбина
+                        for (int j = 0; j < data.Count / 2; j++) //Цикл гармоник
+                        {
+                            bufferPrediction += harmonics[j][i];
+                        }
+                        prediction.Add(bufferPrediction + trend /*(data[i] - bufferPrediction)*/  /*+ trend[i]*/);
+                    }
                 }
             }
             #endregion
@@ -125,6 +143,75 @@ namespace ModelPrediction.Model
             return prediction;
         }
 
+        public static List<double> PredictionUPD(List<double> data, int number, bool darbin = false, double dn = 1.75, double dv = 2.25, string count="")
+        {
+            int g = Convert.ToInt32(count);
+            List<double> coef = data;
+            //for (int i = 0; i < data.Length; i++)
+            //{
+            //    coef.Add(data[i]);
+            //}
+            double[] U = new double[coef.Count];
+            double a01 = 0;
+            for (int i = 0; i < coef.Count; i++)
+            {
+                a01 += Convert.ToDouble(coef[i]);
+            }
+            a01 /= coef.Count;
+            double[] ak1 = new double[coef.Count / 2];
+            double[] bk1 = new double[coef.Count / 2];
+            int costilI = 0;
+            int costilJ = 0;
+            for (int i = 0; i < ak1.Length; i++)
+            {
+                costilI++;
+                for (int j = 0; j < coef.Count; j++)
+                {
+                    costilJ++;
+                    ak1[i] += coef[j] * Math.Cos(2 * Math.PI * (costilI) * costilJ / coef.Count);
+                    bk1[i] += coef[j] * Math.Sin(2 * Math.PI * (costilI) * costilJ / coef.Count);
+                }
+                ak1[i] *= 2;
+                ak1[i] /= coef.Count;
+                bk1[i] *= 2;
+                bk1[i] /= coef.Count;
+            }
+            double[,] arr_x = new double[(coef.Count / 2), coef.Count];
+            int cost = 0;
+            int costi = 0;
+            for (int i = 0; i < (coef.Count / 2); i++)
+            {
+                cost++;
+                for (int j = 0; j < coef.Count; j++)
+                {
+                    costi++;
+                    if (cost < 2)
+                    {
+                        arr_x[i, j] = a01 + (ak1[1] * Math.Cos(2 * Math.PI * 1 * 1 / coef.Count) + bk1[1] * Math.Sin(2 * Math.PI * 1 * 1 / coef.Count))/* + + */ + 0;
+                    }
+                    else
+                    {
+                        arr_x[i, j] = (ak1[i] * Math.Cos(2 * Math.PI * cost * costi / coef.Count) + bk1[i] * Math.Sin(2 * Math.PI * cost * costi / coef.Count))/* + + */ ;
+                    }
+                }
+            }
+            double[] values = new double[coef.Count];
+            for (int i = 0; i < values.Length; i++)
+            {
+                for (int c = 0; c < g; c++)
+                {
+                    try
+                    {
+                        values[i] += arr_x[c, i];
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                }
+            }
+            return values.ToList();
+        }
 
         public static double[] TrendLine(List<double> y, int number)
         {
@@ -159,6 +246,40 @@ namespace ModelPrediction.Model
                 points[i] = b + (a * i);
             }
             return points;
+        }
+        public static double TrendLine2(List<double> y, int number)
+        {
+            //double a = 0;
+            //double b = 0;
+            //double[] x = new double[y.Count];
+            //for (int i = 0; i < x.Length; i++)
+            //{
+            //    x[i] = i;
+            //}
+
+            //if (x.Length != y.Count || x.Length <= 1)
+            //    throw new ArgumentException("Неверные размеры данных");
+            //double a11 = 0.0, a12 = 0.0, a22 = x.Length, b1 = 0.0, b2 = 0.0;
+            //for (int i = 0; i < x.Length; i++)
+            //{
+            //    a11 += x[i] * x[i];
+            //    a12 += x[i];
+            //    b1 += x[i] * y[i];
+            //    b2 += y[i];
+            //}
+            //double det = a11 * a22 - a12 * a12;
+            //if (Math.Abs(det) < 1e-17)
+            //    throw new ArgumentException("Данные не верны");
+            //a = (b1 * a22 - a12 * b2) / det;
+            //b = (a11 * b2 - b1 * a12) / det;
+
+
+            ////double[] points = new double[y.Count + number];
+            ////for (int i = 0; i < points.Length; i++)
+            ////{
+            ////    points[i] = b + (a * i);
+            ////}
+            return y.Average();
         }
     }
 }

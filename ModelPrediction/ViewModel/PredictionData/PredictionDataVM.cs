@@ -76,7 +76,7 @@ namespace ModelPrediction.ViewModel.PredictionData
             }
         }
 
-        public static void GetAnaliticsPoly(CartesianChart cc, DataGrid dgv, double[] data, int x, int y, bool darbin, string dn, string dv)
+        public static void GetAnaliticsPoly(CartesianChart cc, DataGrid dgv, double[] data, int x, int y, bool darbin, string dn, string dv, string countG)
         {
             _x = x;
             analitics = new PredictionM();
@@ -92,7 +92,7 @@ namespace ModelPrediction.ViewModel.PredictionData
             }
 
             
-            double[] arr_analitics = PredictionUpdate.Prediction(buffer.ToList(), 0, darbin, Convert.ToDouble(dn.Replace(".",",")), Convert.ToDouble(dv.Replace(".", ","))).ToArray();
+            double[] arr_analitics = PredictionUpdate.Prediction(buffer.ToList(), 0, darbin, Convert.ToDouble(dn.Replace(".",",")), Convert.ToDouble(dv.Replace(".", ",")), countG).ToArray();
 
             pen.DrawLinerChart(arr_analitics, x, "Аналитика");
             //List<Darbin> table = new List<Darbin>();

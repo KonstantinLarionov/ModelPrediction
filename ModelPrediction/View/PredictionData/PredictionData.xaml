@@ -29,20 +29,16 @@
                     <TextBox DockPanel.Dock="Left" Margin="10, 2"  Name="to" Width="40"/>
                 </DockPanel>
                 <DockPanel DockPanel.Dock="Top" LastChildFill="False">
-                    <Label Content="Ошибка: " DockPanel.Dock="Left" FontSize="16" Margin="10, 2" FontWeight="Bold"/>
-                    <TextBox Name="need_error" DockPanel.Dock="Left" Margin="10, 2" Width="104" IsEnabled="False"/>
+                    <Label Content="№ Гармоники: " DockPanel.Dock="Left" FontSize="16" Margin="10, 2" FontWeight="Bold"/>
+                    <TextBox Name="need_error" DockPanel.Dock="Left" Margin="10, 2" Width="57" IsEnabled="True"/>
                 </DockPanel>
-                <Button DockPanel.Dock="Top" Margin="10,10,10,0" Content="Анализировать" Click="Button_Click" Background="White" BorderBrush="Black" Foreground="#DD000000" FontSize="18"/>
                 <Button DockPanel.Dock="Top" Margin="10,10,10,10" Content="Разложение" Click="Button_Click_2" Background="White" BorderBrush="Black" Foreground="#DD000000" FontSize="18"/>
                 <DockPanel DockPanel.Dock="Left" Height="Auto">
-                    <DockPanel DockPanel.Dock="Top" Height="39">
-                        <Label DockPanel.Dock="Left" Content="Длина прогноза:" FontWeight="Bold" FontSize="16"/>
-                        <TextBox DockPanel.Dock="Left" Width="73" Margin="0,5,0,11" Name="number"/>
-                    </DockPanel>
+                   
                     <Label DockPanel.Dock="Top" Content="Критерий Дарбина-Уотсона" FontWeight="Bold" FontSize="14" Margin="10,5" Visibility="Visible"/>
                     <DockPanel Margin="5" DockPanel.Dock="Top">
                         <Label Content="Вкл/Выкл"/>
-                        <ToggleButton Name="darbin"/>
+                        <ToggleButton Name="darbin" Checked="darbin_Checked" Unchecked="darbin_Unchecked"/>
                     </DockPanel>
                     <DockPanel Margin="5" DockPanel.Dock="Top">
                         <TextBox Name="dn" Margin="5" Text="1.75" Width="96"/>
@@ -55,6 +51,12 @@
                         </DataGrid.Columns>
 
                     </DataGrid>
+                    <Button DockPanel.Dock="Top" Margin="10,10,10,0" Content="Анализировать" Click="Button_Click" Background="White" BorderBrush="Black" Foreground="#DD000000" FontSize="18"/>
+
+                    <DockPanel DockPanel.Dock="Top" Height="39">
+                        <Label DockPanel.Dock="Left" Content="Длина прогноза:" FontWeight="Bold" FontSize="16"/>
+                        <TextBox DockPanel.Dock="Left" Width="73" Margin="0,5,0,11" Name="number"/>
+                    </DockPanel>
                     <Button DockPanel.Dock="Top" Margin="10,10,10,0" Content="Прогнозировать" Click="Button_Click_1" Background="White" BorderBrush="Black" Foreground="#DD000000" FontSize="18"/>
                     <Button DockPanel.Dock="Top" Margin="10,10,10,0" Name="clear" Content="Очистить" Click="clear_Click" Background="White" BorderBrush="Black" Foreground="#DD000000" FontSize="18"/>
 
