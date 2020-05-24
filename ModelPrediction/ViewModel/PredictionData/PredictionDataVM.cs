@@ -133,7 +133,7 @@ namespace ModelPrediction.ViewModel.PredictionData
             
             double[] arr_analitics = PredictionUpdate.Prediction(buffer.ToList(), number, darbin, Convert.ToDouble(dn.Replace(".", ",")), Convert.ToDouble(dv.Replace(".", ","))).ToArray();
             arr_data = arr_analitics;
-            pen.DrawLinerChart(arr_analitics.Skip(y).ToArray (), y, "Прогноз");
+            pen.DrawLinerChart(arr_analitics.Skip(buffer.Length - 1).ToArray(), y, "Прогноз");
             Darbins = PredictionUpdate.darbins;
         }
 
@@ -151,25 +151,26 @@ namespace ModelPrediction.ViewModel.PredictionData
                 count++;
             }
 
-            double alfa = 0.1;
+            double alfa = 0.3;
             double error = 0;
-            do
-            {
-                arr_analitics = analitics.GetExpPrediction(buffer, 0, alfa);
-                double sum = 0;
+            arr_analitics = analitics.GetExpPrediction(buffer, 0, alfa);
+            //do
+            //{
+                
+            //    double sum = 0;
 
-                for (int i = 0; i < buffer.Length; i++)
-                {
-                    sum += (Math.Abs(buffer[i] - arr_analitics[i]) / buffer[i]) * 100;
-                }
-                error = sum / buffer.Length;
+            //    for (int i = 0; i < buffer.Length; i++)
+            //    {
+            //        sum += ((buffer[i] - arr_analitics[i])/ buffer[i]) * 100;
+            //    }
+            //    error = sum / buffer.Length;
 
-                List<Darbin> table = new List<Darbin>();
-                table.Add(new Darbin { N = alfa.ToString(), D = Math.Round(error, 2) });
-                dgv.Items.Add(table);
-                alfa += 0.1;
+            //    List<Darbin> table = new List<Darbin>();
+            //    table.Add(new Darbin { N = alfa.ToString(), D = Math.Round(error, 2) });
+            //    dgv.Items.Add(table);
+            //    alfa += 0.1;
 
-            } while (error > error_need);
+            //} while (error > error_need);
             pen.DrawLinerChart(arr_analitics, x, "Аналитика");
             Darbins = PredictionUpdate.darbins;
 

@@ -105,7 +105,7 @@ namespace ModelPrediction.Model
             }
             else
             {
-                if (count != "" || count != null || count != "0" )
+                if (count != string.Empty )
                 {
                     //Суммирование гармоник
                     for (int i = 0; i < data.Count + number; i++) // Цикл элементов

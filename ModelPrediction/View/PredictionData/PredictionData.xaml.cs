@@ -137,7 +137,7 @@ namespace ModelPrediction.View.ModelThreat
             {
                 if (from.Text != "" && to.Text != "")
                 {
-                    PredictionDataVM.GetAnaliticsExp(predictionChart, outDG, data, Convert.ToInt32(from.Text), Convert.ToInt32(to.Text), Convert.ToDouble(need_error.Text));
+                    PredictionDataVM.GetAnaliticsExp(predictionChart, outDG, data, Convert.ToInt32(from.Text), Convert.ToInt32(to.Text), Convert.ToDouble("20"));
                 }
                 else
                 {

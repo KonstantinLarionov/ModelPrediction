@@ -129,7 +129,7 @@ namespace ModelPrediction.Model
             AForge.Math.Complex[] outpute = inpute;
             AForge.Math.FourierTransform.FFT(outpute, FourierTransform.Direction.Forward);
             double[] arr_out = new double[outpute.Length];
-            for (int i = 0; i < outpute.Length; i++)
+            for (int i = 1; i < outpute.Length; i++)
             {
                 arr_out[i] = Math.Sqrt((Math.Pow(outpute[i].Re, 2) + Math.Pow(outpute[i].Im, 2)));
             }
@@ -142,7 +142,7 @@ namespace ModelPrediction.Model
             AForge.Math.Complex[] outpute = inpute;
             AForge.Math.FourierTransform.FFT(outpute, FourierTransform.Direction.Forward);
             double[] arr_out = new double[outpute.Length];
-            for (int i = 0; i < outpute.Length; i++)
+            for (int i = 1; i < outpute.Length; i++)
             {
                 arr_out[i] = Math.Atan(outpute[i].Im / outpute[i].Re);
             }
